@@ -13,23 +13,14 @@ import confetti from "canvas-confetti";
 
 export const Hero = () => {
   // Calculate countdown
-  const [countdown, setCountdown] = useState({
-    days: "00",
-    hours: "00",
-    minutes: "00",
-    seconds: "00",
-  });
-  const [isCelebrating, setIsCelebrating] = useState(false);
 
-  // Force celebration mode for testing
-  useEffect(() => {
-    setIsCelebrating(true);
-  }, []);
+  const [isCelebrating, setIsCelebrating] = useState(
+    Cookies.get("start") === "true"
+  );
 
   useEffect(() => {
-    setIsCelebrating(true);
-    launchConfetti();
-  }, []);
+    isCelebrating && launchConfetti();
+  }, [isCelebrating]);
 
   const launchConfetti = () => {
     confetti({
@@ -38,40 +29,6 @@ export const Hero = () => {
       origin: { y: 0.8 },
     });
   };
-
-  useEffect(() => {
-    const targetDate = new Date("March 28, 2025").getTime();
-
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      if (distance <= 0) {
-        setCountdown({ days: "00", hours: "00", minutes: "00", seconds: "00" });
-        setIsCelebrating(true);
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setCountdown({
-        days: days.toString().padStart(2, "0"),
-        hours: hours.toString().padStart(2, "0"),
-        minutes: minutes.toString().padStart(2, "0"),
-        seconds: seconds.toString().padStart(2, "0"),
-      });
-    };
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   // Animation variants
   const staggerContainer = {
