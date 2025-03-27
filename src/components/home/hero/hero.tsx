@@ -1,223 +1,15 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { linkSource } from "@/data/links";
-import { One } from "./1";
 import Cookies from "js-cookie";
 import fetchData from "@/components/analytics/fetch-data";
-
-// 3D Flip Counter Component
-const FlipCounter = ({ value, label }: { value: string; label: string }) => {
-  const [prevValue, setPrevValue] = useState(value);
-
-  useEffect(() => {
-    setPrevValue(value);
-  }, [value]);
-
-  return (
-    <div className="relative group perspective">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-amber-700 rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
-      <div className="relative bg-[#0a0d14]/80 backdrop-blur-md border border-amber-900/50 rounded-lg p-4 w-16 md:w-32 flex flex-col items-center">
-        <div className="relative sm:h-12 h-8 w-full overflow-hidden">
-          <AnimatePresence mode="popLayout">
-            <motion.div
-              key={value}
-              initial={{ rotateX: -90, position: "absolute", width: "100%" }}
-              animate={{ rotateX: 0, position: "absolute", width: "100%" }}
-              exit={{ rotateX: 90, position: "absolute", width: "100%" }}
-              transition={{ duration: 0.5 }}
-              style={{ transformOrigin: "bottom center" }}
-              className="flex justify-center"
-            >
-              <span className="text-xl md:text-4xl font-bold text-amber-400">
-                {value}
-              </span>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        <span className="text-xs md:text-sm text-amber-200/80 mt-2">
-          {label}
-        </span>
-      </div>
-      <style jsx global>{`
-        .perspective {
-          perspective: 1000px;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-// Interactive Terminal Component
-const InteractiveTerminal = () => {
-  const [commands, setCommands] = useState<string[]>([
-    "$ sail excel-fest",
-    "> excel-fest@4.0.0 start",
-    "> next start",
-    "info - Ship ready to sail on 28th",
-  ]);
-
-  const [currentCommand, setCurrentCommand] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
-  const terminalRef = useRef<HTMLDivElement>(null);
-
-  const possibleCommands = [
-    "event - Treasure map coordinates received",
-    "warn - Enemy ships approaching from the east",
-    "info - Scanning for hidden treasures",
-    "event - New crew member joined the expedition",
-    "warn - Stormy seas ahead, secure all cargo",
-    "info - Calibrating navigation systems",
-    "event - Found ancient artifact in the depths",
-    "warn - Low supplies, need to dock soon",
-    "info - Decoding secret message from allies",
-  ];
-
-  useEffect(() => {
-    const typeNextCommand = () => {
-      if (!isTyping) return;
-
-      const nextCommand =
-        possibleCommands[Math.floor(Math.random() * possibleCommands.length)];
-      let index = 0;
-
-      const typingInterval = setInterval(() => {
-        if (index <= nextCommand.length) {
-          setCurrentCommand(nextCommand.substring(0, index));
-          index++;
-        } else {
-          clearInterval(typingInterval);
-
-          // Add the completed command to the list
-          setTimeout(() => {
-            setCommands((prev) => [...prev, nextCommand]);
-            setCurrentCommand("");
-
-            // Keep only the last 6 commands
-            if (commands.length > 5) {
-              setCommands((prev) => prev.slice(prev.length - 5));
-            }
-
-            // Pause before typing the next command
-            setIsTyping(false);
-            setTimeout(() => setIsTyping(true), 1000);
-          }, 500);
-        }
-      }, 50);
-
-      return () => clearInterval(typingInterval);
-    };
-
-    if (isTyping) {
-      const timeout = setTimeout(typeNextCommand, 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, [commands, isTyping, possibleCommands]);
-
-  useEffect(() => {
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-    }
-  }, [commands, currentCommand]);
-
-  return (
-    <div className="bg-amber-900/10 backdrop-blur-sm rounded-lg border border-amber-900/30 overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2 bg-amber-900/20 border-b border-amber-900/30">
-        <div className="flex space-x-2">
-          <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
-        </div>
-        <div className="text-xs text-amber-400/80">excel-fest@4.0.0</div>
-        <div className="text-xs text-amber-400/80">ship's log</div>
-      </div>
-      <div
-        ref={terminalRef}
-        className="p-4 font-mono text-xs text-amber-100 overflow-hidden h-40 overflow-y-auto"
-      >
-        {commands.map((command, index) => (
-          <div key={index} className="flex">
-            {command.startsWith("$") ? (
-              <>
-                <span className="text-amber-500 mr-2">$</span>
-                <span>{command.substring(2)}</span>
-              </>
-            ) : command.startsWith(">") ? (
-              <span className="text-amber-400">{command}</span>
-            ) : command.startsWith("info") ? (
-              <>
-                <span className="text-amber-400">info</span>
-                <span className="ml-2">- {command.substring(7)}</span>
-              </>
-            ) : command.startsWith("event") ? (
-              <>
-                <span className="text-amber-400">event</span>
-                <span className="ml-2">- {command.substring(8)}</span>
-              </>
-            ) : command.startsWith("warn") ? (
-              <>
-                <span className="text-yellow-400">warn</span>
-                <span className="ml-2">- {command.substring(7)}</span>
-              </>
-            ) : (
-              <span>{command}</span>
-            )}
-          </div>
-        ))}
-
-        {currentCommand && (
-          <div className="flex">
-            {currentCommand.startsWith("info") ? (
-              <>
-                <span className="text-amber-400">info</span>
-                <span className="ml-2 typing-cursor">
-                  - {currentCommand.substring(7)}
-                </span>
-              </>
-            ) : currentCommand.startsWith("event") ? (
-              <>
-                <span className="text-amber-400">event</span>
-                <span className="ml-2 typing-cursor">
-                  - {currentCommand.substring(8)}
-                </span>
-              </>
-            ) : currentCommand.startsWith("warn") ? (
-              <>
-                <span className="text-yellow-400">warn</span>
-                <span className="ml-2 typing-cursor">
-                  - {currentCommand.substring(7)}
-                </span>
-              </>
-            ) : (
-              <span className="typing-cursor">{currentCommand}</span>
-            )}
-          </div>
-        )}
-      </div>
-      <style jsx global>{`
-        .typing-cursor::after {
-          content: "|";
-          animation: blink 1s step-end infinite;
-        }
-        @keyframes blink {
-          from,
-          to {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0;
-          }
-        }
-      `}</style>
-    </div>
-  );
-};
+import confetti from "canvas-confetti";
 
 export const Hero = () => {
   // Calculate countdown
@@ -227,6 +19,25 @@ export const Hero = () => {
     minutes: "00",
     seconds: "00",
   });
+  const [isCelebrating, setIsCelebrating] = useState(false);
+
+  // Force celebration mode for testing
+  useEffect(() => {
+    setIsCelebrating(true);
+  }, []);
+
+  useEffect(() => {
+    setIsCelebrating(true);
+    launchConfetti();
+  }, []);
+
+  const launchConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 100,
+      origin: { y: 0.8 },
+    });
+  };
 
   useEffect(() => {
     const targetDate = new Date("March 28, 2025").getTime();
@@ -235,8 +46,9 @@ export const Hero = () => {
       const now = new Date().getTime();
       const distance = targetDate - now;
 
-      if (distance < 0) {
+      if (distance <= 0) {
         setCountdown({ days: "00", hours: "00", minutes: "00", seconds: "00" });
+        setIsCelebrating(true);
         return;
       }
 
@@ -328,25 +140,30 @@ export const Hero = () => {
             </p>
           </motion.div>
 
-          <div className="relative flex flex-col items-center mb-3">
+          <div className="relative flex flex-col items-center ">
             <p className="text-xl md:text-2xl mb-2 text-amber-500">
               National level IT Fest for Under Graduates
             </p>
-            <div className="flex items-center gap-2 text-amber-400/80">
-              <Clock className="w-5 h-5" />
-              <p className="text-lg">Prepare to set sail in:</p>
-            </div>
           </div>
 
-          {/* Countdown Timer */}
+          {/* Countdown Timer or Celebration Message */}
+
           <motion.div
-            variants={fadeIn}
-            className="mb-10 flex flex-wrap justify-center gap-4"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 15,
+              duration: 0.8,
+            }}
+            className="mb-10 mt-4 flex flex-col items-center"
           >
-            <FlipCounter value={countdown.days} label="Days" />
-            <FlipCounter value={countdown.hours} label="Hours" />
-            <FlipCounter value={countdown.minutes} label="Minutes" />
-            <FlipCounter value={countdown.seconds} label="Seconds" />
+            <div className="relative py-3s  px-10 overflow-hidden">
+              <h2 className="text-3xl md:text-5xl font-bold text-amber-400 mb-2 relative z-10  celebration-text">
+                The Fest is Live!
+              </h2>
+            </div>
           </motion.div>
 
           <motion.div
@@ -520,6 +337,36 @@ export const Hero = () => {
           20%,
           100% {
             transform: translateX(100%) rotate(30deg);
+          }
+        }
+
+        .celebration-text {
+          animation: celebrationPulse 2s infinite;
+          text-shadow: 0 0 2px #ff4500, 0 0 20px #ff6a3d;
+        }
+
+        .celebration-badge {
+          animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes celebrationPulse {
+          0% {
+            text-shadow: 0 0 2px #ff4500, 0 0 2px #ff6a3d;
+          }
+          50% {
+            text-shadow: 0 0 5px #ff4500, 0 0 5px #ff6a3d, 0 0 10px #ff4500;
+          }
+          100% {
+            text-shadow: 0 0 2px #ff4500, 0 0 2px #ff6a3d;
+          }
+        }
+
+        @keyframes bounce {
+          from {
+            transform: translateY(0);
+          }
+          to {
+            transform: translateY(-10px);
           }
         }
       `}</style>
