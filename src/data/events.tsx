@@ -7,8 +7,8 @@ export const events: I_Event[] = [
     image: "/logo/coding.jpg",
     slogan: "Raid the code, seize the treasure!",
     participants: "01",
-    roundsTime: ["10:00 AM - 10:30 AM", "11:15 AM - 12:15 PM"],
-    venue: "Blackbeard Hall",
+    roundsTime: ["10:00 AM - 10:30 AM", "11:00 AM - 12:30 PM"],
+    venue: "Ethnotech lab - (007-Main Building 2nd floor)",
     guidelines: [
       "No laptops, mobile phones, or internet access allowed.",
       "No inbuilt functions.",
@@ -32,7 +32,7 @@ export const events: I_Event[] = [
     slogan: "Chart your course through the digital tides!",
     roundsTime: ["10:15 AM - 11:00 AM", "11:30 AM - 1:15 PM"],
     participants: "02",
-    venue: "Captain's Quarters",
+    venue: "Lab M403 - 4th floor (Mechanical Block)",
     guidelines: [
       "Participants must have a basic understanding of HTML, CSS, and JavaScript.",
       "Personal electronic devices (including laptops, tablets, and mobile phones) are strictly prohibited during the competition.",
@@ -55,11 +55,11 @@ export const events: I_Event[] = [
     image: "/logo/quiz.jpg",
     participants: "02",
     roundsTime: [
-      "10:30 AM - 11:00 AM",
-      "12:00 PM - 12:30 PM",
-      "1:30 PM - 2:30 PM",
+      "10:30 AM - 11:00 AM (005)",
+      "12:00 PM - 12:30 PM (Seminar Hall)",
+      "1:30 PM - 2:30 PM (Ethnotech conference room Main Building 2nd floor)",
     ],
-    venue: "Treasure Map Room",
+    venue: "Check event times",
     slogan: "Code, clash, conquer.",
     guidelines: [
       "Questions will be based on general knowledge, technical, and programming topics.",
@@ -90,7 +90,7 @@ export const events: I_Event[] = [
       "11:45 AM - 12:30 PM",
       "1:30 PM - 2:15 PM",
     ],
-    venue: "Cannon Deck",
+    venue: "Main Building 1st floor",
     slogan: "Frag and rise, claim the prize!",
     guidelines: [
       "Teams must have a stable internet connection; no rematches for disconnections.",
@@ -114,12 +114,11 @@ export const events: I_Event[] = [
     image: "/logo/it-manager.jpg",
     participants: "01",
     roundsTime: [
-      "10:15 AM - 10:45 AM",
-      "11:00 AM - 11:30 AM",
-      "11:30 AM - 12:25 PM",
-      "1:45 PM - 2:45 PM",
+      "10:15 AM - 10:45 AM (006)",
+      "11:30 AM - 12:30 PM (006)",
+      "1:45 PM - 2:45 PM (Seminar Hall)",
     ],
-    venue: "Admiral's Office",
+    venue: "Check specific event timings",
     slogan: "Words sharper than swords!",
     guidelines: [
       "Specific details regarding each round will be disclosed during the event.",
@@ -141,11 +140,39 @@ export const events: I_Event[] = [
   },
   {
     id: 6,
-    name: "Kraken Cut (Documentary)",
+    name: "Secret of the Sea (Surprise Event)",
+    image: "/logo/surprise.jpg",
+    participants: "02",
+    roundsTime: [
+      "10:10 AM - 11:00 AM (007)",
+      "11:10 AM - 12:00 PM (007)",
+      "12:00 PM - 12:30 PM",
+    ],
+    venue: "006",
+    slogan: "Dive deep - the treasure awaits!",
+    guidelines: [
+      "Tasks must be completed within the given time.",
+      "Each game will have an elimination round.",
+      "The event coordinator's judgment is final.",
+    ],
+    coordinator: [
+      {
+        name: "Chaithali Shetty",
+        contact: "9019852518",
+      },
+      {
+        name: "Nayana",
+        contact: "8105024150",
+      },
+    ],
+  },
+  {
+    id: 7,
+    name: "Kraken Cuts (Documentary)",
     image: "/logo/reels.jpg",
     participants: "01",
-    roundsTime: ["10:00 AM - 2:00 PM"],
-    venue: "Kraken's Lair",
+    roundsTime: ["10:00 AM - 10:15 AM", "(Submission at 007 before 2.30)"],
+    venue: "Seminar hall",
     slogan: "Unleash the Kraken of Creativity!",
     guidelines: [
       "The reel should be exactly 2 minutes long, with an additional 1 minute allowed for credits or ending screens.",
@@ -165,12 +192,12 @@ export const events: I_Event[] = [
     ],
   },
   {
-    id: 7,
+    id: 8,
     name: "Tides of Dance (Group Dance)",
     image: "/logo/dance.jpg",
     participants: "06",
     roundsTime: ["3:00 PM - 4:00 PM"],
-    venue: "Main Deck",
+    venue: "Seminar Hall",
     slogan: "Where every step rises like a wave!",
     guidelines: [
       "Category: Any dance form.",
@@ -189,34 +216,6 @@ export const events: I_Event[] = [
       {
         name: "Priyanka S",
         contact: "9481983768",
-      },
-    ],
-  },
-  {
-    id: 8,
-    name: "Secret of the Sea (Surprise Event)",
-    image: "/logo/surprise.jpg",
-    participants: "02",
-    roundsTime: [
-      "10:10 AM - 11:00 AM",
-      "11:10 AM - 12:00 PM",
-      "12:00 PM - 12:30 PM",
-    ],
-    venue: "Hidden Cove",
-    slogan: "Dive deep - the treasure awaits!",
-    guidelines: [
-      "Tasks must be completed within the given time.",
-      "Each game will have an elimination round.",
-      "The event coordinator's judgment is final.",
-    ],
-    coordinator: [
-      {
-        name: "Chaithali Shetty",
-        contact: "9019852518",
-      },
-      {
-        name: "Nayana",
-        contact: "8105024150",
       },
     ],
   },

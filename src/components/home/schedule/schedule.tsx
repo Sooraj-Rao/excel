@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, MapPin, Users, Search, Clock, Filter, X } from "lucide-react";
+import { Phone, MapPin, Users, Search, Clock, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,15 +21,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { useEffect } from "react";
 import { events } from "@/data/events";
-import { I_Coordinator } from "@/types/type";
+import type { I_Coordinator } from "@/types/type";
 
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(false);
@@ -137,6 +137,12 @@ export const Schedule = () => {
               <span className="font-medium">Inauguration Time:</span>
               <span className="text-amber-300">9:00 AM</span>
             </div>
+            <div className="hidden sm:block w-px h-6 bg-amber-500/50"></div>
+            <div className="flex items-center gap-2 text-amber-200">
+              <Clock className="h-4 w-4 text-amber-400" />
+              <span className="font-medium">Lunch Time:</span>
+              <span className="text-amber-300">12:30 PM</span>
+            </div>
           </div>
         </div>
 
@@ -173,84 +179,112 @@ export const Schedule = () => {
 
         {isDesktop ? (
           // Desktop view with table
-          <div className="relative  overflow-hidden rounded-lg border border-amber-900/30 bg-amber-900/5 backdrop-blur-sm">
-            <div className="absolute -inset-px bg-gradient-to-r from-amber-700/10 to-amber-800/10 rounded-lg blur-sm opacity-75"></div>
-            <div className="relative">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-amber-900/30 hover:bg-transparent bg-amber-950/80 backdrop-blur-sm">
-                    <TableHead className="text-amber-400 font-bold sticky left-0 bg-amber-950/80 z-20">
-                      EVENT NAME
-                    </TableHead>
-                    {/* <TableHead className="text-amber-400 font-bold">
-                      VENUE
-                    </TableHead> */}
-                    <TableHead className="text-amber-400 font-bold">
-                      EVENT HEAD
-                    </TableHead>
-                    {Array.from({ length: maxRounds }).map((_, index) => (
-                      <TableHead
-                        key={index}
-                        className="text-amber-400 font-bold"
-                      >
-                        ROUND {index + 1}
+          <TooltipProvider>
+            <div className="relative overflow-hidden rounded-lg border border-amber-900/30 bg-amber-900/5 backdrop-blur-sm">
+              <div className="absolute -inset-px bg-gradient-to-r from-amber-700/10 to-amber-800/10 rounded-lg blur-sm opacity-75"></div>
+              <div className="relative">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-amber-900/30 hover:bg-transparent bg-amber-950/80 backdrop-blur-sm">
+                      <TableHead className="text-amber-400 font-bold sticky left-0 bg-amber-950/80 z-20 w-[250px]">
+                        EVENT NAME
                       </TableHead>
-                    ))}
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sortedEvents.length > 0 ? (
-                    sortedEvents.map((event) => (
-                      <TableRow
-                        key={event.id}
-                        className="border-amber-900/30 hover:bg-amber-500/10 transition-colors"
-                      >
-                        <TableCell className="font-medium text-amber-200 sticky left-0 bg-amber-900/5 backdrop-blur-sm z-10">
-                          {event.name}
-                        </TableCell>
-                        {/* <TableCell className="text-amber-200/80">
-                          <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4 text-amber-400" />
-                            {event.venue}
-                          </div>
-                        </TableCell> */}
-                        <TableCell className="text-amber-200/80 font-medium">
-                          {event.coordinator[0].name}
-                        </TableCell>
-                        {event.roundsTime.map((time, idx) => (
-                          <TableCell key={idx} className="text-amber-200">
-                            {time}
-                          </TableCell>
-                        ))}
-                        {/* Add empty cells for events with fewer rounds */}
-                        {Array.from({
-                          length: maxRounds - event.roundsTime.length,
-                        }).map((_, idx) => (
-                          <TableCell
-                            key={`empty-${idx}`}
-                            className="text-amber-200/30"
-                          >
-                            -
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell
-                        colSpan={maxRounds + 3}
-                        className="text-center py-8 text-amber-200"
-                      >
-                        No events found. Try adjusting your search.
-                      </TableCell>
+                      <TableHead className="text-amber-400 font-bold w-[180px]">
+                        VENUE
+                      </TableHead>
+                      <TableHead className="text-amber-400 font-bold w-[180px]">
+                        EVENT HEAD
+                      </TableHead>
+                      {Array.from({ length: maxRounds }).map((_, index) => (
+                        <TableHead
+                          key={index}
+                          className="text-amber-400 font-bold w-[150px]"
+                        >
+                          ROUND {index + 1}
+                        </TableHead>
+                      ))}
                     </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {sortedEvents.length > 0 ? (
+                      sortedEvents.map((event) => (
+                        <TableRow
+                          key={event.id}
+                          className="border-amber-900/30 hover:bg-amber-500/10 transition-colors"
+                        >
+                          <TableCell className="font-medium text-amber-200 sticky left-0 bg-amber-900/5 backdrop-blur-sm z-10">
+                            {event.name}
+                          </TableCell>
+                          <TableCell className="text-amber-200/80">
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex items-center cursor-pointer gap-2 max-w-[180px]">
+                                  <MapPin className="h-4 w-4 flex-shrink-0 text-amber-400" />
+                                  <div className="truncate">{event.venue}</div>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent className="bg-amber-950 border-amber-800 text-amber-200">
+                                {event.venue}
+                              </TooltipContent>
+                            </Tooltip>
+                          </TableCell>
+                          <TableCell className="text-amber-200/80 font-medium">
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="truncate max-w-[180px]">
+                                  {event.coordinator[0].name}
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent className="bg-amber-950 border-amber-800 text-amber-200">
+                                {event.coordinator[0].name} -{" "}
+                                {event.coordinator[0].contact}
+                              </TooltipContent>
+                            </Tooltip>
+                          </TableCell>
+                          {event.roundsTime.map((time, idx) => (
+                            <TableCell key={idx} className="text-amber-200 cursor-pointer">
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <div className="truncate max-w-[150px]">
+                                    {time}
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent className="bg-amber-950 border-amber-800 text-amber-200">
+                                  {time}
+                                </TooltipContent>
+                              </Tooltip>
+                            </TableCell>
+                          ))}
+                          {/* Add empty cells for events with fewer rounds */}
+                          {Array.from({
+                            length: maxRounds - event.roundsTime.length,
+                          }).map((_, idx) => (
+                            <TableCell
+                              key={`empty-${idx}`}
+                              className="text-amber-200/30"
+                            >
+                              -
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell
+                          colSpan={maxRounds + 3}
+                          className="text-center py-8 text-amber-200"
+                        >
+                          No events found. Try adjusting your search.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
-          </div>
+          </TooltipProvider>
         ) : (
-          // Mobile view with accordion
+          // Mobile view with accordion - KEEPING THIS AS BEFORE
           <div className="rounded-lg border border-amber-900/30 bg-amber-900/5 backdrop-blur-sm overflow-hidden">
             <div className="absolute -inset-px bg-gradient-to-r from-amber-700/10 to-amber-800/10 rounded-lg blur-sm opacity-75"></div>
             <div className="relative">
@@ -275,6 +309,13 @@ export const Schedule = () => {
                       </AccordionTrigger>
                       <AccordionContent className="px-4 pb-4 pt-1">
                         <div className="space-y-4">
+                          <div>
+                            <h4 className="text-amber-300 text-sm font-medium flex items-center gap-1 mb-2">
+                              <MapPin className="h-3.5 w-3.5" /> Venue
+                            </h4>
+                            <div className="text-amber-200">{event.venue}</div>
+                          </div>
+
                           <div>
                             <h4 className="text-amber-300 text-sm font-medium flex items-center gap-1 mb-2">
                               <Clock className="h-3.5 w-3.5" /> Rounds
