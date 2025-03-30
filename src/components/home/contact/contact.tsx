@@ -189,6 +189,7 @@ const Contact = ({ fadeIn }: { fadeIn: any }) => {
           </motion.div>
 
           <motion.div
+            id="map"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}

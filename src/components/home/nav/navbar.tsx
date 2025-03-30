@@ -114,26 +114,6 @@ export const Navbar = ({
               )}
               <span className="text-xs">Music</span>
             </Button>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <a
-                onClick={() => {
-                  fetchData(
-                    "register-button",
-                    Cookies.get("ref") || "search",
-                    `nav-Excel`,
-                    ""
-                  );
-                }}
-                href={linkSource.googleForm}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Button className="relative overflow-hidden group">
-                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-500 to-amber-700 transition-all duration-300 group-hover:scale-105"></span>
-                  <span className="relative">Register</span>
-                </Button>
-              </a>
-            </motion.div>
           </div>
 
           <motion.button

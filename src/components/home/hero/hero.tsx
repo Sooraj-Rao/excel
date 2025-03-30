@@ -97,11 +97,11 @@ export const Hero = () => {
             </p>
           </motion.div>
 
-          <div className="relative flex flex-col items-center ">
+          <motion.div variants={fadeIn} className="relative flex flex-col items-center ">
             <p className="text-xl md:text-2xl mb-2 text-amber-500">
               National level IT Fest for Under Graduates
             </p>
-          </div>
+          </motion.div>
 
           {/* Countdown Timer or Celebration Message */}
 
@@ -133,28 +133,26 @@ export const Hero = () => {
               className="relative group "
             >
               <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-amber-700 rounded-lg blur opacity-20 group-hover:opacity-60 transition duration-500 group-hover:duration-200"></div>
-              <Link
-                onClick={() => {
+
+              <button
+                disabled
+                onClick={() =>
                   fetchData(
                     "join-crew",
                     Cookies.get("ref") || "search",
                     `hero-Excel`,
                     ""
-                  );
-                }}
-                href={linkSource.googleForm}
-                target="_blank"
-                rel="noreferrer"
+                  )
+                }
+                className="relative cursor-not-allowed  px-8 py-3 rounded-md text-lg  overflow-hidden"
               >
-                <button className="relative  px-8 py-3 rounded-md text-lg  overflow-hidden">
-                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-600 to-amber-700 transition-all duration-300 group-hover:scale-105"></span>
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-600 to-amber-700 transition-all duration-300 group-hover:scale-105"></span>
 
-                  <span className="relative flex items-center  text-white">
-                    Join the Crew
-                    <ArrowRight size={16} className=" ml-2" />
-                  </span>
-                </button>
-              </Link>
+                <span className="relative flex items-center  text-white">
+                  Join the Crew
+                  <ArrowRight size={16} className=" ml-2" />
+                </span>
+              </button>
             </motion.div>
             <motion.div
               whileHover={{ scale: 1.05 }}

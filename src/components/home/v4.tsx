@@ -27,6 +27,7 @@ import type { I_Event } from "@/types/type";
 import { linkSource } from "@/data/links";
 import { Loader } from "./loader/loader";
 import Analytics from "../analytics/main";
+import Banner from "./nav/banner";
 
 export default function ExcelFestPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -299,7 +300,7 @@ export default function ExcelFestPage() {
             }}
           ></div>
         </div>
-
+        <Banner />
         {/* Navbar */}
         <Navbar
           isMenuOpen={isMenuOpen}
