@@ -176,7 +176,8 @@ export const Navbar = ({
                 )
               )}
 
-              <a
+              <Button
+                disabled
                 onClick={() => {
                   fetchData(
                     "register-button",
@@ -185,14 +186,10 @@ export const Navbar = ({
                     ""
                   );
                 }}
-                href={linkSource.googleForm}
-                target="_blank"
-                rel="noreferrer"
+                className="w-full cursor-not-allowed bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white"
               >
-                <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white">
-                  Register
-                </Button>
-              </a>
+                Register
+              </Button>
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}

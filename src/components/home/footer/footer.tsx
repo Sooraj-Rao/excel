@@ -115,13 +115,13 @@ const Credit = () => {
       >
         Sooraj Rao
       </a>
-      and
+      {/* and
       <a
         className=" mx-2 underline underline-offset-2 text-yellow-500"
         href={"/team"}
       >
         Co.
-      </a>
+      </a> */}
     </p>
   );
 };

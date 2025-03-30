@@ -32,7 +32,7 @@ const Banner = () => {
     >
       <p className="text-sm text-center sm:text-left font-medium leading-relaxed">
         🎉 This website was developed for the IT Festival at our{" "}
-        <a className="px-1 text-yellow-400" href="/#map">
+        <a className="px-[2px] text-yellow-400" href="/#map">
           college.
         </a>{" "}
         Now that the event is over, it has been kept here for showcase purposes
