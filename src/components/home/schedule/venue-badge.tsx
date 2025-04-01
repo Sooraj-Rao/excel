@@ -10,8 +10,7 @@ export function VenueBadge({ venue, className = "" }: VenueBadgeProps) {
   // Check if venue is "Multiple Locations" or "Check event times"
   const isSpecialVenue =
     venue === "Multiple Locations" ||
-    venue === "Check event times" ||
-    venue === "Check specific event timings";
+    venue === "Check specific event timings" 
 
   return (
     <Badge

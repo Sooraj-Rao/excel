@@ -103,7 +103,7 @@ const Credit = () => {
       <a
         onClick={() => {
           fetchData(
-            "open-linkedin",
+            "open-portfolio",
             Cookies.get("ref") || "search",
             `Excel-footer`,
             ""
@@ -111,7 +111,7 @@ const Credit = () => {
         }}
         target="_blank"
         className=" mx-1 underline underline-offset-2 text-yellow-500"
-        href={"https://www.linkedin.com/in/sooraj-rao"}
+        href={"https://soorajrao.in/?ref=excel"}
       >
         Sooraj Rao
       </a>
