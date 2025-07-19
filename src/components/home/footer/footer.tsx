@@ -52,7 +52,7 @@ const Footer = () => {
           <div className="text-center">
             <div className="flex sm:flex-row flex-col-reverse   w-full sm:justify-between justify-center  items-center space-x-4">
               <div className=" w-10 h-4 sm:block hidden "></div>
-              <div className=" mt-2  sm:absolute w-44  bottom-0 sm:-bottom-2 left-1/2 right-1/2 sm:-translate-x-[50%]  cursor-default border border-amber-400/10 rounded-md px-4 py-2 flex items-center space-x-2 scale-90 md:scale-100 bg-transparent">
+              <div className=" mt-2  sm:absolute w-40  bottom-0 sm:-bottom-2 left-1/2 right-1/2 sm:-translate-x-[50%]  cursor-default border border-amber-400/10 rounded-md px-4 py-2 flex items-center space-x-2 scale-90 md:scale-100 bg-transparent">
                 <span className="h-2 w-2 animate-pulse bg-amber-400 rounded-full"></span>
                 <div className="flex items-center gap-x-3 text-amber-400">
                   <span className="text-xs">Site Views</span>
